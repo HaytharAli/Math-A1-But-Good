@@ -84,7 +84,7 @@ void Player::MovementUpdate()
 	m_moving = false;
 	if (m_hasPhysics) {
 		float speed = 10.f;
-		vec3 vel = vec3(0.f, 0.f, 0.f);
+		vec3 vel = vec3(0.f, m_physBody->GetVelocity().y, 0.f);
 
 		if (Input::GetKey(Key::Shift))
 		{
@@ -116,7 +116,11 @@ void Player::MovementUpdate()
 			m_facing = RIGHT;
 			m_moving = true;
 		}
-
+		if (Input::GetKeyDown(Key::Space))
+		{
+			m_physBody->ApplyForce(vec3(0.f, m_physBody->GetMass() * 100, 0.f));
+			m_moving = true;
+		}
 
 		m_physBody->SetVelocity(vel * speed);
 	}
